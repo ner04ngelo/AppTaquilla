@@ -9,6 +9,7 @@ using Newtonsoft.Json;
 
 namespace AppTaquilla.Controllers
 {
+    [HandleError]
     public class SalaController : Controller
     {
         // GET: Sala

@@ -14,5 +14,7 @@ namespace AppTaquilla
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
         }
+
+
     }
 }
