@@ -1,0 +1,33 @@
+﻿@model AppTaquilla.Models.Salas
+
+@{
+    ViewBag.Title = "VerSalas";
+}
+
+<h2>VerSalas</h2>
+<link href="~/Content/Asientos.css" rel="stylesheet" />
+<div>
+    <h4>Salas</h4>
+    <hr />
+    @foreach (var item in Model.fila)
+    {
+        for (int i = 1; i <= item.cantidad; i++)
+        {          
+            <label class="switch">
+                <input type="checkbox">
+                <span class="slider round">@Html.Label(item.nombre + i)</span>
+            </label>
+        }
+            <br />
+    }
+
+</div>
+
+
+
+<div style="margin-top:100px">
+    <p>      
+        @Html.ActionLink("Regresar", "Salas")
+    </p>
+</div>
+

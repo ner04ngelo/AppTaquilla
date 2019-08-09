@@ -12,10 +12,12 @@ namespace AppTaquilla.Controllers
 {
     public class FilaController : Controller
     {
+        protected static string URL = "http://localhost:44015/";
+
         // GET: Fila
         public async Task<ActionResult> Filas()
         {
-            string URL = "URL DEL API";
+           
             List<Fila> filasInfo = new List<Fila>();
 
             using (var client = new HttpClient())
@@ -25,7 +27,7 @@ namespace AppTaquilla.Controllers
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 //Llamada a todlos los metodos
 
-                HttpResponseMessage res = await client.GetAsync("api/~");
+                HttpResponseMessage res = await client.GetAsync("api/Fila");
 
                 if (res.IsSuccessStatusCode)
                 {

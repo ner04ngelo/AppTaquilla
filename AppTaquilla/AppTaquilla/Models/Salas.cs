@@ -9,5 +9,7 @@ namespace AppTaquilla.Models
     {
         public int sala_id { get; set; }
         public string nombre { get; set; }
+
+        public List<Fila> fila { get; set; }
     }
 }

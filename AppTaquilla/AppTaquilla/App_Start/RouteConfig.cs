@@ -12,14 +12,8 @@ namespace AppTaquilla
             routes.MapRoute(
                 name: "Default",
                 url: "{controller}/{action}/{id}",
-                defaults: new { controller = "Home", action = "Index", id = UrlParameter.Optional }
-            );
-
-            routes.MapRoute(
-                name: "404-PageNotFound",
-                url: "{*url}",
-                new { controller = "StaticContent", action = "PageNotFound" }
-                );
+                defaults: new { controller = "Index", action = "Index", id = UrlParameter.Optional }
+            );           
         }
     }
 }
