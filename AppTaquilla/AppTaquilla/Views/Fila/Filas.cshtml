@@ -7,7 +7,7 @@
 <h2>Filas</h2>
 
 <p>
-    @Html.ActionLink("Create New", "Create")
+    @Html.ActionLink("Agregar Fila", "Create")
 </p>
 <table class="table">
     <tr>
@@ -15,7 +15,7 @@
             @Html.Label("ID")
         </th>
         <th>
-            @Html.Label("Sala ID")
+            @Html.Label("Sala")
         </th>
         <th>
             @Html.Label("Letra")
@@ -32,7 +32,7 @@
             @Html.DisplayFor(modelItem => item.fila_id)
         </td>
         <td>
-            @Html.DisplayFor(modelItem => item.sala_id)
+            @Html.DisplayFor(modelItem => item.sala.nombre)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.nombre)
@@ -41,9 +41,9 @@
             @Html.DisplayFor(modelItem => item.cantidad)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }) |
-            @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ })
+            @Html.ActionLink("Edit", "Edit", new {id = item.fila_id}) |
+            <!-- @Html.ActionLink("Details", "Details", new {id=item.fila_id}) |-->
+            @Html.ActionLink("Delete", "Delete", new {id=item.fila_id})
         </td>
     </tr>
 }

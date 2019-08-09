@@ -91,26 +91,6 @@ namespace AppTaquilla.Controllers
             return View(sala);
         }
 
-        public ActionResult Delete(int id)
-        {
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(URL);
-
-                //HTTP DELETE
-                var deleteTask = client.DeleteAsync("api/Sala/" + id.ToString());
-                deleteTask.Wait();
-
-                var result = deleteTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-
-                    return RedirectToAction("Salas");
-                }
-            }
-
-            return RedirectToAction("Salas");
-        }
 
         /// METODOS HTTP
         [HttpPost]
@@ -135,7 +115,7 @@ namespace AppTaquilla.Controllers
         }
           
         [HttpPost]
-        public ActionResult create(Salas salas)
+        public ActionResult Create(Salas salas)
         {
             using (var client = new HttpClient())
             {
@@ -155,6 +135,27 @@ namespace AppTaquilla.Controllers
             ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
 
             return View(salas);
+        }
+
+        public ActionResult Delete(int id)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(URL);
+
+                //HTTP DELETE
+                var deleteTask = client.DeleteAsync("api/Sala/" + id.ToString());
+                deleteTask.Wait();
+
+                var result = deleteTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+
+                    return RedirectToAction("Salas");
+                }
+            }
+
+            return RedirectToAction("Salas");
         }
 
     }
