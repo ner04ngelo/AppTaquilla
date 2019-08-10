@@ -68,7 +68,15 @@ namespace AppTaquilla.Controllers
             request.AddHeader("Content-Type", "application/json");
             request.AddParameter("undefined", "{\r\n   \"email\":\""+ usuario.email+ "\",\r\n   \"contrasena\":\""+usuario.contrasena+"\"\r\n}", ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
-            string token = response.Content.Substring(12,411);
+
+            string token = response.Content.Substring(20, 411);
+
+            if (response.IsSuccessful)
+            {
+
+                return RedirectToAction("Index", "Index");
+            }
+           
 
             
 
