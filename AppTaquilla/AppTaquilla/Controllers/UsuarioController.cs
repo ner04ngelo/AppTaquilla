@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using System.Web.Mvc;
 using AppTaquilla.Models;
 using Newtonsoft.Json;
+using RestSharp;
 
 namespace AppTaquilla.Controllers
 {
@@ -50,25 +51,44 @@ namespace AppTaquilla.Controllers
 
         [HttpPost]
         public ActionResult Login(Usuario usuario)
-        {           
+        {
 
-            using (var client = new HttpClient())
-            {
-                client.BaseAddress = new Uri(URL);
+            var client = new RestClient(URL + "api/Login");
+            var request = new RestRequest(Method.POST);
+            request.AddHeader("cache-control", "no-cache");
+            request.AddHeader("Connection", "keep-alive");
+            request.AddHeader("Content-Length", "71");
+            request.AddHeader("Accept-Encoding", "gzip, deflate");
+            request.AddHeader("Cookie", "ARRAffinity=43741afb0eacd9be64969ac3797f5e272f22a23cd8446e29f3ebb3a6bd9797ab");
+            request.AddHeader("Host", "apiptickets.azurewebsites.net");
+            request.AddHeader("Postman-Token", "72026db5-5e05-4179-b20e-7688f6b63571,f46175df-16d0-4351-8f50-2c9cd6fa8a0d");
+            request.AddHeader("Cache-Control", "no-cache");
+            request.AddHeader("Accept", "*/*");
+            request.AddHeader("User-Agent", "PostmanRuntime/7.15.2");
+            request.AddHeader("Content-Type", "application/json");
+            request.AddParameter("undefined", "{\r\n   \"email\":\""+ usuario.email+ "\",\r\n   \"contrasena\":\""+usuario.contrasena+"\"\r\n}", ParameterType.RequestBody);
+            IRestResponse response = client.Execute(request);
+            string token = response.Content.Substring(12,411);
 
-                //HTTP POST
-                var postTask = client.PostAsJsonAsync<Usuario>("api/Login", usuario);
-                postTask.Wait();
+            
 
-                var result = postTask.Result;
-                if (result.IsSuccessStatusCode)
-                {
-                   
-                    return RedirectToAction("Index", "Index");
-                }
-            }
+            /* using (var client = new HttpClient())
+             {
+                 client.BaseAddress = new Uri(URL);
 
-            ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
+                 //HTTP POST
+                 var postTask = client.PostAsJsonAsync<Usuario>("api/Login", usuario);
+                 postTask.Wait();
+
+                 var result = postTask.Result;
+                 if (result.IsSuccessStatusCode)
+                 {
+
+                     return RedirectToAction("Index", "Index");
+                 }
+             }
+
+             ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");*/
 
             return View(usuario);
 
