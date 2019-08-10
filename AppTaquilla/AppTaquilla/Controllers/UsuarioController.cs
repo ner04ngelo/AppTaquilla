@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Threading.Tasks;
@@ -39,6 +40,40 @@ namespace AppTaquilla.Controllers
             }
 
         }
+
+        public ActionResult Login()
+        {
+            return View();
+        }
+
+       
+
+        [HttpPost]
+        public ActionResult Login(Usuario usuario)
+        {           
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(URL);
+
+                //HTTP POST
+                var postTask = client.PostAsJsonAsync<Usuario>("api/Login", usuario);
+                postTask.Wait();
+
+                var result = postTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                   
+                    return RedirectToAction("Index", "Index");
+                }
+            }
+
+            ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");
+
+            return View(usuario);
+
+        }
+
 
         public ActionResult Edit(int id)
         {
