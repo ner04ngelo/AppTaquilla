@@ -153,6 +153,7 @@
     <Compile Include="Controllers\IndexController.cs" />
     <Compile Include="Controllers\SalaController.cs" />
     <Compile Include="Controllers\TicketController.cs" />
+    <Compile Include="Controllers\UsuarioController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -175,12 +176,15 @@
     <Content Include="Views\Fila\Filas.cshtml" />
     <Content Include="Views\Sala\Create.cshtml" />
     <Content Include="Views\Sala\VerSalas.cshtml" />
-    <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
     <Content Include="Views\Index\Index.cshtml" />
     <Content Include="Views\Sala\Salas.cshtml" />
     <Content Include="Views\Fila\Create.cshtml" />
     <Content Include="Views\Fila\Edit.cshtml" />
+    <Content Include="Views\Usuario\Usuarios.cshtml" />
+    <Content Include="Views\Usuario\Create.cshtml" />
+    <Content Include="Views\_ViewStart.cshtml" />
+    <Content Include="Views\Shared\_Layout.cshtml" />
+    <Content Include="Views\Usuario\Edit.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

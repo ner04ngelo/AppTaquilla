@@ -1,0 +1,56 @@
+﻿@model IEnumerable<AppTaquilla.Models.Usuario>
+
+@{
+    ViewBag.Title = "Usuarios";
+}
+
+<h2>Usuarios</h2>
+
+<p>
+    @Html.ActionLink("Nuevo Usuario", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.Label("Usuario ID")
+        </th>
+        <th>
+            @Html.Label("Email")
+        </th>
+        <th>
+            @Html.Label("Nombre")
+        </th>
+        <th>
+            @Html.Label("Apellidos")
+        </th>
+        <th>
+            @Html.Label("Contraseña")
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.usuario_id)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.email)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.nombres)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.apellidos)
+        </td>
+        <td>            
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id = item.usuario_id }) |
+            <!-- @Html.ActionLink("Details", "Details", new { id = item.usuario_id }) |-->
+            @Html.ActionLink("Delete", "Delete", new { id = item.usuario_id })
+        </td>
+    </tr>
+}
+
+</table>
