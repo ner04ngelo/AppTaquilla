@@ -12,7 +12,7 @@ namespace AppTaquilla.Controllers
 {
     public class FilaController : Controller
     {
-        protected static string URL = "http://localhost:44015/";
+        protected static string URL = "https://apiptickets.azurewebsites.net/";
         protected static List<Salas> salasInfo = new List<Salas>();
         protected static List<SelectListItem> listado;
 
