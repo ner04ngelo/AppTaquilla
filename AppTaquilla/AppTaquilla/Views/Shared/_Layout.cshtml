@@ -30,15 +30,17 @@
                 {
                     ViewBag.mail = (String)Session["Email"];
 
-            <ul style="float:right">
+                <ul style="float:right">
 
-               <label class = "navbar-brand">
-                  @ViewBag.mail
-               </label>            
-                
-
-            </ul>
-                        }
+                    <label class="session">
+                        @ViewBag.mail
+                    </label>
+                    <label style="display:block">
+                        @Html.ActionLink("Cerrar Sesión", "CerrarSession", "Usuario", new { area = "" }, new { @class = "close-session" })
+                    </label>
+                </ul>
+                 
+                }
                 else
                 {
                     <ul class="nav navbar-nav" style="float:right">
@@ -49,7 +51,7 @@
 
             </div>
 
-          
+
         </div>
     </div>
 

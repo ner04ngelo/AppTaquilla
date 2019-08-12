@@ -73,6 +73,9 @@ namespace AppTaquilla.Controllers
             {
                 string token = response.Content.Substring(20,408);
                 Session["Email"] = usuario.email;              
+                Session["Token"] = token;
+
+                token = null;
 
                 return RedirectToAction("Index", "Index");
             }
@@ -85,6 +88,13 @@ namespace AppTaquilla.Controllers
 
         }
 
+
+        public ActionResult CerrarSession()
+        {
+               Session.Abandon();
+
+             return RedirectToAction("Index", "Index");
+        }
 
         public ActionResult Edit(int id)
         {
@@ -165,9 +175,9 @@ namespace AppTaquilla.Controllers
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(URL);
-
+                
                 //HTTP POST
-                var postTask = client.PostAsJsonAsync<Usuario>("api/Usuario", usuario);
+                var postTask = client.PostAsJsonAsync<Usuario>("api/Usuario", usuario);                
                 postTask.Wait();
 
                 var result = postTask.Result;
