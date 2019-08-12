@@ -68,35 +68,18 @@ namespace AppTaquilla.Controllers
             request.AddHeader("Content-Type", "application/json");
             request.AddParameter("undefined", "{\r\n   \"email\":\""+ usuario.email+ "\",\r\n   \"contrasena\":\""+usuario.contrasena+"\"\r\n}", ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);
-
-            string token = response.Content.Substring(20, 411);
-
+           
             if (response.IsSuccessful)
             {
+                string token = response.Content.Substring(20,408);
+                Session["Email"] = usuario.email;              
 
                 return RedirectToAction("Index", "Index");
             }
-           
-
-            
-
-            /* using (var client = new HttpClient())
-             {
-                 client.BaseAddress = new Uri(URL);
-
-                 //HTTP POST
-                 var postTask = client.PostAsJsonAsync<Usuario>("api/Login", usuario);
-                 postTask.Wait();
-
-                 var result = postTask.Result;
-                 if (result.IsSuccessStatusCode)
-                 {
-
-                     return RedirectToAction("Index", "Index");
-                 }
-             }
-
-             ModelState.AddModelError(string.Empty, "Server Error. Please contact administrator.");*/
+            else
+            {
+                ViewBag.error = "Usuario no válido";
+            }                  
 
             return View(usuario);
 

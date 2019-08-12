@@ -25,10 +25,28 @@
                     <li> @Html.ActionLink("Salas", "Salas", "Sala", new { area = "" }, new { @class = "navbar-brand" })</li>
                     <li> @Html.ActionLink("Filas", "Filas", "Fila", new { area = "" }, new { @class = "navbar-brand" })</li>
                 </ul>
-                <ul class="nav navbar-nav" style="float:right">
-                    <li>@Html.ActionLink("Registrarse", "Create", "Usuario", new { area = "" }, new { @class = "navbar-brand" })</li>
-                    <li class="navbar-brand">Ingresar</li>
-                </ul>
+
+                @if ((String)Session["Email"] != null)
+                {
+                    ViewBag.mail = (String)Session["Email"];
+
+            <ul style="float:right">
+
+               <label class = "navbar-brand">
+                  @ViewBag.mail
+               </label>            
+                
+
+            </ul>
+                        }
+                else
+                {
+                    <ul class="nav navbar-nav" style="float:right">
+                        <li>@Html.ActionLink("Registrarse", "Create", "Usuario", new { area = "" }, new { @class = "navbar-brand" })</li>
+                        <li>@Html.ActionLink("Ingresar", "Login", "Usuario", new { area = "" }, new { @class = "navbar-brand" })</li>
+                    </ul>
+                }
+
             </div>
 
           
