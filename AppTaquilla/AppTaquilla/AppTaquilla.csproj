@@ -163,6 +163,7 @@
     <Compile Include="Models\Compra.cs" />
     <Compile Include="Models\Fila.cs" />
     <Compile Include="Models\Salas.cs" />
+    <Compile Include="Models\SalasconAsientos.cs" />
     <Compile Include="Models\Ticket.cs" />
     <Compile Include="Models\Usuario.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

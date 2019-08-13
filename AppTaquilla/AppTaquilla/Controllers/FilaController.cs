@@ -27,8 +27,7 @@ namespace AppTaquilla.Controllers
                 client.BaseAddress = new Uri(URL);
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                //Llamada a todlos los metodos
-
+               
                 HttpResponseMessage res = await client.GetAsync("api/Fila");
 
                 if (res.IsSuccessStatusCode)

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<AppTaquilla.Models.Salas>
+﻿@model IEnumerable<AppTaquilla.Models.SalasconAsientos>
 
     @{
         ViewBag.Title = "Salas";
@@ -18,7 +18,10 @@
                 @Html.Label("Sala")
             </th>
             <th>
-                @Html.Label("Cantidad de filas")
+                @Html.Label("Asientos Totales")
+            </th>
+            <th>
+                @Html.Label("Asientos Reservadors")
             </th>
             <th></th>
         </tr>
@@ -33,7 +36,10 @@
                     @Html.DisplayFor(modelItem => item.nombre)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.fila.Count)
+                    @Html.DisplayFor(modelItem =>item.numTotal)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem =>item.numOcupado)
                 </td>
                 <td>
                     @Html.ActionLink("Editar", "Edit", new { id = item.sala_id }) |

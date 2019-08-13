@@ -18,7 +18,7 @@ namespace AppTaquilla.Controllers
         public async Task<ActionResult> Salas()
         {
          
-            List<Salas> salasInfo = new List<Salas>();
+            List<SalasconAsientos> salasInfo = new List<SalasconAsientos>();
 
             using (var client = new HttpClient())
             {
@@ -27,13 +27,14 @@ namespace AppTaquilla.Controllers
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 //Llamada a todlos los metodos
 
-                HttpResponseMessage res = await client.GetAsync("api/Sala");
+                HttpResponseMessage res = await client.GetAsync("api/Sala/GetExistencias");
 
                 if (res.IsSuccessStatusCode)
                 {
                     var TerrResponse = res.Content.ReadAsStringAsync().Result;
 
-                    salasInfo = JsonConvert.DeserializeObject<List<Salas>>(TerrResponse);
+                    salasInfo = JsonConvert.DeserializeObject<List<SalasconAsientos>>(TerrResponse);                   
+
                 }
 
                 return View(salasInfo);
