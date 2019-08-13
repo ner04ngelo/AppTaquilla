@@ -21,25 +21,23 @@
                 @Html.ActionLink("Cinemas", "Index", "Index", new { area = "" }, new { @class = "navbar-brand" })
             </div>
             <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li> @Html.ActionLink("Salas", "Salas", "Sala", new { area = "" }, new { @class = "navbar-brand" })</li>
-                    <li> @Html.ActionLink("Filas", "Filas", "Fila", new { area = "" }, new { @class = "navbar-brand" })</li>
-                </ul>
 
-                @if ((String)Session["Email"] != null)
+                @if ((String)Session["Usuario"] != null)
                 {
-                    ViewBag.mail = (String)Session["Email"];
+                    ViewBag.mail = (String)Session["Usuario"];
+                    <ul class="nav navbar-nav">
+                        <li> @Html.ActionLink("Salas", "Salas", "Sala", new { area = "" }, new { @class = "navbar-brand" })</li>
+                        <li> @Html.ActionLink("Filas", "Filas", "Fila", new { area = "" }, new { @class = "navbar-brand" })</li>
+                    </ul>
+                    <ul style="float:right">
+                        <label class="session">
+                            @ViewBag.mail
+                        </label>
+                        <label style="display:block">
+                            @Html.ActionLink("Cerrar Sesión", "CerrarSession", "Usuario", new { area = "" }, new { @class = "close-session" })
+                        </label>
+                    </ul>
 
-                <ul style="float:right">
-
-                    <label class="session">
-                        @ViewBag.mail
-                    </label>
-                    <label style="display:block">
-                        @Html.ActionLink("Cerrar Sesión", "CerrarSession", "Usuario", new { area = "" }, new { @class = "close-session" })
-                    </label>
-                </ul>
-                 
                 }
                 else
                 {
@@ -48,13 +46,10 @@
                         <li>@Html.ActionLink("Ingresar", "Login", "Usuario", new { area = "" }, new { @class = "navbar-brand" })</li>
                     </ul>
                 }
-
             </div>
-
 
         </div>
     </div>
-
 
     <div class="container body-content">
         @RenderBody()
@@ -63,7 +58,6 @@
             <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
         </footer>
     </div>
-
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
 </body>

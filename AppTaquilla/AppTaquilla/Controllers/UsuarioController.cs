@@ -14,70 +14,64 @@ namespace AppTaquilla.Controllers
     public class UsuarioController : Controller
     {
         protected static string URL = "https://apiptickets.azurewebsites.net/";
+        protected static List<Usuario> users= new List<Usuario>();
 
-        // GET: Sala
-        public async Task<ActionResult> Usuarios()
-        {
 
-            List<Usuario> salasInfo = new List<Usuario>();
-
+        // GET: Usuario
+     /*   public  void Usuarios(string token)
+        {                       
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(URL);
                 client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Authorization
+                         = new AuthenticationHeaderValue("Bearer", token);
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 //Llamada a todlos los metodos
 
-                HttpResponseMessage res = await client.GetAsync("api/Usuario");
+                var res = client.GetAsync("api/Usuario").Result;
 
                 if (res.IsSuccessStatusCode)
                 {
                     var TerrResponse = res.Content.ReadAsStringAsync().Result;
 
-                    salasInfo = JsonConvert.DeserializeObject<List<Usuario>>(TerrResponse);
+                    users = JsonConvert.DeserializeObject<List<Usuario>>(TerrResponse);
                 }
-
-                return View(salasInfo);
+               
             }
 
-        }
+        }*/
 
         public ActionResult Login()
         {
             return View();
         }
 
-       
+   
 
         [HttpPost]
         public ActionResult Login(Usuario usuario)
         {
+            
 
             var client = new RestClient(URL + "api/Login");
-            var request = new RestRequest(Method.POST);
-            request.AddHeader("cache-control", "no-cache");
-            request.AddHeader("Connection", "keep-alive");
-            request.AddHeader("Content-Length", "71");
-            request.AddHeader("Accept-Encoding", "gzip, deflate");
-            request.AddHeader("Cookie", "ARRAffinity=43741afb0eacd9be64969ac3797f5e272f22a23cd8446e29f3ebb3a6bd9797ab");
-            request.AddHeader("Host", "apiptickets.azurewebsites.net");
-            request.AddHeader("Postman-Token", "72026db5-5e05-4179-b20e-7688f6b63571,f46175df-16d0-4351-8f50-2c9cd6fa8a0d");
-            request.AddHeader("Cache-Control", "no-cache");
-            request.AddHeader("Accept", "*/*");
-            request.AddHeader("User-Agent", "PostmanRuntime/7.15.2");
+            var request = new RestRequest(Method.POST);         
+            request.AddHeader("Host", "apiptickets.azurewebsites.net");          
             request.AddHeader("Content-Type", "application/json");
             request.AddParameter("undefined", "{\r\n   \"email\":\""+ usuario.email+ "\",\r\n   \"contrasena\":\""+usuario.contrasena+"\"\r\n}", ParameterType.RequestBody);
-            IRestResponse response = client.Execute(request);
-           
-            if (response.IsSuccessful)
-            {
-                string token = response.Content.Substring(20,408);
-                Session["Email"] = usuario.email;              
-                Session["Token"] = token;
+            IRestResponse response = client.Execute(request);           
 
-                token = null;
+            if (response.IsSuccessful)            {
+                string token = response.Content.Substring(20, 408);
 
-                return RedirectToAction("Index", "Index");
+                //Agregamos el email y el token a un objeto sesión
+                    Session["Usuario"] = usuario.email;
+                    Session["Token"] = token;
+
+                    token = null;
+
+                    return RedirectToAction("Index", "Index");                           
+               
             }
             else
             {
@@ -91,10 +85,13 @@ namespace AppTaquilla.Controllers
 
         public ActionResult CerrarSession()
         {
+            // Abandon es una forma de destruir la sesión del usuario borrando en ella todo lo que contenga.
                Session.Abandon();
+
 
              return RedirectToAction("Index", "Index");
         }
+
 
         public ActionResult Edit(int id)
         {
