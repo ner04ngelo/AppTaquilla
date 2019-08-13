@@ -3,46 +3,56 @@
     ViewBag.Title = "VerSalas";
 }
 <h2>VerSalas</h2>
-<link href="~/Content/Asientos.css" rel="stylesheet" />
-<div>
-    <h4>Salas</h4>
-    <hr />
-    @foreach (var fila in Model.fila)
-    {
-        bool isReservado = false;
+<link href="~/Content/css/Asientos.css" rel="stylesheet" />
+@using (Html.BeginForm("ComprarTicket", "Compra"))
+{
+    @Html.AntiForgeryToken()
+    <div style="overflow: auto;overflow-y: hidden;white-space: nowrap;">
+        <h4>Salas</h4>
+        <hr />
+        <input name="sala_id" value="@Model.sala_id" hidden>
 
-        for (int i = 1; i <= fila.cantidad; i++)
+        @foreach (var fila in Model.fila)
         {
-            if (fila.ticket.Count != 0)
+            bool isReservado = false;
+            for (int i = 1; i <= fila.cantidad; i++)
             {
-                foreach (var ticket in fila.ticket)
+                isReservado = false;
+                if (fila.ticket.Count != 0)
                 {
-                    if (ticket.num_asiento == i)
+                    foreach (var ticket in fila.ticket)
                     {
-                        isReservado = true;
-
-                        <label class="switch">
-                            <input type="checkbox" checked disabled="disabled">
-                            <span class="slider round">@Html.Label(fila.nombre + ticket.num_asiento)</span>
-                        </label>
-                    }
-                    else
-                    {
-                        isReservado = false;
+                        if (ticket.num_asiento == i)
+                        {
+                            isReservado = true;
+                        }
                     }
                 }
+                if (isReservado)
+                {
+                    <label class="ocup-contenedor">
+                        <input type="checkbox">
+                        <span class="ocup-label">@(fila.nombre + i)</span>
+                    </label>
+                }
+                else
+                {
+                    <label class="disp-contenedor">
+                        <input type="checkbox" name="asiento" value="@(fila.fila_id + "-" + i)">
+                        <span class="disp-label">@(fila.nombre + i)</span>
+                    </label>
+                }
             }
-            if (!isReservado)
-            {
-                <label class="switch">
-                    <input type="checkbox">
-                    <span class="slider round">@Html.Label(fila.nombre + i)</span>
-                </label>
-            }
+            <br />
         }
-        <br />
-    }
-</div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Comprar" class="btn btn-default" />
+        </div>
+    </div>
+}
 
 <div style="margin-top:100px">
     <p>

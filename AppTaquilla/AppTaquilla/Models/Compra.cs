@@ -9,6 +9,8 @@ namespace AppTaquilla.Models
     {
         public int compra_id { get; set; }
         public int cliente_id { get; set; }
-        public int fecha { get; set; }
+        public DateTime fecha { get; set; }
+
+        public virtual List<Ticket> ticket { get; set; }
     }
 }

@@ -12,9 +12,13 @@ namespace AppTaquilla.Controllers
 {
     public class CompraController : Controller
     {
-        public async Task<ActionResult> ComprarTicket()
+        protected static string URL = "https://apiptickets.azurewebsites.net/";
+
+        [HttpPost]
+        public ActionResult ComprarTicket(string[] asiento, int sala_id)
         {
-            string URL = "URL DEL API";
+            if (asiento == null) return View("Home");
+            
             List<Compra> filasInfo = new List<Compra>();
 
             using (var client = new HttpClient())
@@ -22,18 +26,35 @@ namespace AppTaquilla.Controllers
                 client.BaseAddress = new Uri(URL);
                 client.DefaultRequestHeaders.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-                //Llamada a todlos los metodos
+                client.DefaultRequestHeaders.Authorization
+                         = new AuthenticationHeaderValue("Bearer", Session["Token"].ToString());
 
-                HttpResponseMessage res = await client.GetAsync("api/~");
+                Compra compra = new Compra();
+                String test = Session["Token"].ToString();
+                compra.cliente_id = 0;
+                compra.fecha = DateTime.Now.Date;
+                compra.ticket = new List<Ticket>();
 
-                if (res.IsSuccessStatusCode)
+                foreach (String tempAsiento in asiento)
                 {
-                    var TerrResponse = res.Content.ReadAsStringAsync().Result;
+                    String[] temp = tempAsiento.Split('-');
+                    Ticket ticket = new Ticket();
+                    ticket.fila_id = int.Parse(temp[0]);
+                    ticket.num_asiento = int.Parse(temp[1]);
+                    compra.ticket.Add(ticket);
+                }
+                
+                //HTTP POST
+                var postTask = client.PostAsJsonAsync("api/Compra/", compra);
+                postTask.Wait();
 
-                    filasInfo = JsonConvert.DeserializeObject<List<Compra>>(TerrResponse);
+                var result = postTask.Result;
+                if (result.IsSuccessStatusCode)
+                {
+                    return RedirectToAction("VerSalas/" + sala_id, "Sala");
                 }
 
-                return View(filasInfo);
+                return RedirectToAction("VerSalas/" + sala_id, "Sala");
             }
         }
 

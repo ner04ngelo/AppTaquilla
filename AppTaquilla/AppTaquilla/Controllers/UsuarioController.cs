@@ -62,7 +62,7 @@ namespace AppTaquilla.Controllers
             IRestResponse response = client.Execute(request);           
 
             if (response.IsSuccessful)            {
-                string token = response.Content.Substring(20, 408);
+                string token = response.Content.Substring(20, 421);
 
                 //Agregamos el email y el token a un objeto sesión
                     Session["Usuario"] = usuario.email;
