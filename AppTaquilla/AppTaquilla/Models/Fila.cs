@@ -13,5 +13,6 @@ namespace AppTaquilla.Models
         public int cantidad { get; set; }
 
         public Salas sala { get; set; }
+        public List<Ticket> ticket { get; set; }
     }
 }

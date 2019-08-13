@@ -1,33 +1,51 @@
 ﻿@model AppTaquilla.Models.Salas
-
 @{
     ViewBag.Title = "VerSalas";
 }
-
 <h2>VerSalas</h2>
 <link href="~/Content/Asientos.css" rel="stylesheet" />
 <div>
     <h4>Salas</h4>
     <hr />
-    @foreach (var item in Model.fila)
+    @foreach (var fila in Model.fila)
     {
-        for (int i = 1; i <= item.cantidad; i++)
-        {          
-            <label class="switch">
-                <input type="checkbox">
-                <span class="slider round">@Html.Label(item.nombre + i)</span>
-            </label>
-        }
-            <br />
-    }
+        bool isReservado = false;
 
+        for (int i = 1; i <= fila.cantidad; i++)
+        {
+            if (fila.ticket.Count != 0)
+            {
+                foreach (var ticket in fila.ticket)
+                {
+                    if (ticket.num_asiento == i)
+                    {
+                        isReservado = true;
+
+                        <label class="switch">
+                            <input type="checkbox" checked disabled="disabled">
+                            <span class="slider round">@Html.Label(fila.nombre + ticket.num_asiento)</span>
+                        </label>
+                    }
+                    else
+                    {
+                        isReservado = false;
+                    }
+                }
+            }
+            if (!isReservado)
+            {
+                <label class="switch">
+                    <input type="checkbox">
+                    <span class="slider round">@Html.Label(fila.nombre + i)</span>
+                </label>
+            }
+        }
+        <br />
+    }
 </div>
 
-
-
 <div style="margin-top:100px">
-    <p>      
+    <p>
         @Html.ActionLink("Regresar", "Salas")
     </p>
 </div>
-

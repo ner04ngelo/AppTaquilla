@@ -13,12 +13,14 @@ namespace AppTaquilla.Controllers
     public class SalaController : Controller
     {
         protected static string URL = "https://apiptickets.azurewebsites.net/";
-     
+        protected List<Ticket> ticketInfo;
+        protected List<SalasconAsientos> salasInfo;
+
         // GET: Sala
         public async Task<ActionResult> Salas()
         {
          
-            List<SalasconAsientos> salasInfo = new List<SalasconAsientos>();
+            salasInfo = new List<SalasconAsientos>();
 
             using (var client = new HttpClient())
             {
@@ -64,6 +66,33 @@ namespace AppTaquilla.Controllers
 
             return View(sala);                   
         }
+
+        public void GetTickets()
+        {
+            string token = Session["token"].ToString();
+
+             ticketInfo = new List<Ticket>();
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(URL);
+                client.DefaultRequestHeaders.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+                client.DefaultRequestHeaders.Authorization
+                         = new AuthenticationHeaderValue("Bearer", token);
+                //Llamada a todlos los metodos
+
+                HttpResponseMessage res = client.GetAsync("api/Ticket").Result;
+
+                if (res.IsSuccessStatusCode)
+                {
+                    var TerrResponse = res.Content.ReadAsStringAsync().Result;
+
+                    ticketInfo = JsonConvert.DeserializeObject<List<Ticket>>(TerrResponse);
+
+                }
+            }
+        }
         
         public ActionResult Create()
         {
@@ -73,6 +102,9 @@ namespace AppTaquilla.Controllers
         public ActionResult VerSalas(int Id)
         {
             Salas sala = null;
+           
+            
+                
             using (var client = new HttpClient())
             {
                 client.BaseAddress = new Uri(URL);
