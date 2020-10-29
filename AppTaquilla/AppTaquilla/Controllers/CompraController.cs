@@ -12,7 +12,7 @@ namespace AppTaquilla.Controllers
 {
     public class CompraController : Controller
     {
-        protected static string URL = "https://apiptickets.azurewebsites.net/";
+        protected static string URL = "https://apitickets.azurewebsites.net/";
 
         [HttpPost]
         public ActionResult ComprarTicket(string[] asiento, int sala_id)

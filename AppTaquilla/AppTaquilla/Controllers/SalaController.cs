@@ -12,7 +12,7 @@ namespace AppTaquilla.Controllers
     [HandleError]
     public class SalaController : Controller
     {
-        protected static string URL = "https://apiptickets.azurewebsites.net/";
+        protected static string URL = "https://apitickets.azurewebsites.net/";
         protected List<Ticket> ticketInfo;
         protected List<SalasconAsientos> salasInfo;
 

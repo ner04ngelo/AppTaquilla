@@ -14,7 +14,7 @@ namespace AppTaquilla.Controllers
         // GET: Ticket
         public async Task<ActionResult> Tickets()
         {
-            string URL = "URL DEL API";
+            string URL = "https://apitickets.azurewebsites.net/";
             List<Ticket> filasInfo = new List<Ticket>();
 
             using (var client = new HttpClient())

@@ -13,7 +13,8 @@ namespace AppTaquilla.Controllers
 {
     public class UsuarioController : Controller
     {
-        protected static string URL = "https://apiptickets.azurewebsites.net/";
+        protected static string URL = "https://apitickets.azurewebsites.net/";
+        protected static string URI = "apitickets.azurewebsites.net";
         protected static List<Usuario> users= new List<Usuario>();
 
 
@@ -56,16 +57,20 @@ namespace AppTaquilla.Controllers
 
             var client = new RestClient(URL + "api/Login");
             var request = new RestRequest(Method.POST);         
-            request.AddHeader("Host", "apiptickets.azurewebsites.net");          
+            request.AddHeader("Host", URI);          
             request.AddHeader("Content-Type", "application/json");
+       
             request.AddParameter("undefined", "{\r\n   \"email\":\""+ usuario.email+ "\",\r\n   \"contrasena\":\""+usuario.contrasena+"\"\r\n}", ParameterType.RequestBody);
-            IRestResponse response = client.Execute(request);           
+            IRestResponse response = client.Execute(request);
 
-            if (response.IsSuccessful)            {
-                string token = response.Content.Substring(20, 421);
+            if (response.IsSuccessful) {
+               
+                string token = response.Content.Substring(20);
+                int test = token.IndexOf("}");
+                token =token.Substring(0,(test-1));
 
                 //Agregamos el email y el token a un objeto sesión
-                    Session["Usuario"] = usuario.email;
+                Session["Usuario"] = usuario.email;
                     Session["Token"] = token;
 
                     token = null;

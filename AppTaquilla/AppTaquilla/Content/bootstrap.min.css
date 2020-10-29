@@ -3822,7 +3822,7 @@ textarea.input-group-sm > .form-control, textarea.input-group-sm > .input-group-
     float: left;
     /* padding: 15px 15px;*/
     font-weight: bold;
-    font-size: 18px;
+    font-size: 10%;
     line-height: 20px;
     color: white;
 }

@@ -12,7 +12,7 @@ namespace AppTaquilla.Controllers
 {
     public class FilaController : Controller
     {
-        protected static string URL = "https://apiptickets.azurewebsites.net/";
+        protected static string URL = "https://apitickets.azurewebsites.net/";
         protected static List<Salas> salasInfo = new List<Salas>();
         protected static List<SelectListItem> listado;
 
@@ -56,7 +56,7 @@ namespace AppTaquilla.Controllers
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
                 //Llamada a todlos los metodos
 
-                var res = client.GetAsync("api/Sala").Result;
+                var res = client.GetAsync("api/Sala/GetExistencias").Result;
 
                 if (res.IsSuccessStatusCode)
                 {
